@@ -1,14 +1,36 @@
 import "./Editor.css"
+import { useState } from "react";
+import { getFormattedDate } from "../util";
 // initData -> 입력창 또는 수정창에서 다르게 보여질 입력 내용
 // 수정 -> 기존에 입력한 내용이 출력되어야 함
 // onSubmit -> 작성 완료 버튼을 클릭했을 때 실행되는 이벤트 핸들러 함수
-
 const Editor = ({initData, onSubmit }) => { 
+
+    // const [date, setDate] = useState("");
+    // const [emotionId, setImotionId] = useState(3);
+    // const [content, setContent] = useState("");
+    const [state, setState] = useState(
+        { 
+            date : getFormattedDate(new Date()),
+            emotionId : 3,
+            content : ""
+        });
+    const handleChangeDate = (e) => {
+        setState({ 
+            ...state, // state 객체 내의 속성값 변경하기
+            date : e.target.value
+        });
+    }   
+
+
     return (
         <div className="Editor">
             <div className="editor_section">
                 <h4>오늘의 날짜</h4>
                 {/* 날짜 입력 창 */}
+                <div className="input_wrapper">
+                    <input type="date" value={state.date} onChange={handleChangeDate} />
+                </div>
             </div>
             <div className="editor_section">
                 <h4>오늘의 감정</h4>
