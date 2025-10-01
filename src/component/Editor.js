@@ -15,10 +15,17 @@ const Editor = ({initData, onSubmit }) => {
             emotionId : 3,
             content : ""
         });
+
     const handleChangeDate = (e) => {
         setState({ 
             ...state, // state 객체 내의 속성값 변경하기
             date : e.target.value
+        });
+    }   
+    const onChangeContent = (e) => {
+        setState({ 
+            ...state,
+            content : e.target.value
         });
     }   
 
@@ -39,6 +46,11 @@ const Editor = ({initData, onSubmit }) => {
             <div className="editor_section">
                 <h4>오늘의 일기</h4>
                 {/* 일기 입력 또는 수정 창 */}
+                <textarea 
+                    value={state.content} 
+                    onChange={onChangeContent}
+                    placeholder="오늘은 어땠나요?" 
+                />
             </div>
             <div className="editor_section">
                 {/* 작성완료, 취소 버튼 */}
