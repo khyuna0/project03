@@ -1,6 +1,8 @@
 import "./Editor.css"
 import { useState } from "react";
 import { getFormattedDate } from "../util";
+import Button from "../component/Button";
+import { Navigate, useNavigate } from "react-router-dom";
 // initData -> 입력창 또는 수정창에서 다르게 보여질 입력 내용
 // 수정 -> 기존에 입력한 내용이 출력되어야 함
 // onSubmit -> 작성 완료 버튼을 클릭했을 때 실행되는 이벤트 핸들러 함수
@@ -28,7 +30,15 @@ const Editor = ({initData, onSubmit }) => {
             content : e.target.value
         });
     }   
+    const handleSubmit = () => {
+        onSubmit(state);
+    }
 
+    // 취소 버튼 이벤트 핸들러. 이전 페이지로 이동
+    const navigate = useNavigate();
+    const handleOnGoBack = () => {
+        navigate(-1);
+    }
 
     return (
         <div className="Editor">
@@ -52,8 +62,9 @@ const Editor = ({initData, onSubmit }) => {
                     placeholder="오늘은 어땠나요?" 
                 />
             </div>
-            <div className="editor_section">
-                {/* 작성완료, 취소 버튼 */}
+            <div className="editor_section bottom_section">
+                {<Button text={"작성 취소"} onClick={handleOnGoBack} />}
+                {<Button type={"positive"} text={"작성 완료"} onClick={handleSubmit}/>}
             </div>
         </div>
     );

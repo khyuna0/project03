@@ -10,15 +10,15 @@
 
 .Button_positive {
     background-color: #64c964;
-    counter-reset: white;
+    color: black;
 }
 
 .Button_negative {
     background-color: #fd565f;
-    counter-reset: white;
+    color: white;
 }
 
 .Button_default {
     background-color: #ececec;
-    counter-reset: black;
+    color: black;
 }

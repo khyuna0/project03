@@ -9,6 +9,9 @@ const Home = () => {
     // const [searchParams, SetSearchParams] = useSearchParams();  // 객체 형식
     // console.log(searchParams.get("id"));
 
+    const onSubmit = () => {
+        alert("작성 완료")
+    }
     return (
         <div>
             <Header title={"HOME"}
@@ -19,7 +22,7 @@ const Home = () => {
                 alert("부정 버튼")
             }}/>}
             /> 
-            <Editor />
+            <Editor onSubmit={onSubmit}/>
         </div>
     )
 }
