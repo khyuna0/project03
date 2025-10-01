@@ -12,6 +12,8 @@ const Home = () => {
     const onSubmit = () => {
         alert("작성 완료")
     }
+
+    
     return (
         <div>
             <Header title={"HOME"}
@@ -22,7 +24,13 @@ const Home = () => {
                 alert("부정 버튼")
             }}/>}
             /> 
-            <Editor onSubmit={onSubmit}/>
+            <Editor initData={
+            {   // 수정 시 사용
+                date : new Date().getTime(),
+                emotionId : 1,
+                content : "이전에 작성했던 일기"
+            }    
+            } onSubmit={onSubmit}/>
         </div>
     )
 }

@@ -1,12 +1,13 @@
 import "./Editor.css"
-import { useState } from "react";
-import { getFormattedDate } from "../util";
+import { useEffect, useState } from "react";
+import { getFormattedDate, emotionList } from "../util";
 import Button from "../component/Button";
 import { Navigate, useNavigate } from "react-router-dom";
+import EmotionItem from "./EmotionItem";
 // initData -> 입력창 또는 수정창에서 다르게 보여질 입력 내용
 // 수정 -> 기존에 입력한 내용이 출력되어야 함
 // onSubmit -> 작성 완료 버튼을 클릭했을 때 실행되는 이벤트 핸들러 함수
-const Editor = ({initData, onSubmit }) => { 
+const Editor = ({initData, onSubmit}) => { 
 
     // const [date, setDate] = useState("");
     // const [emotionId, setImotionId] = useState(3);
@@ -40,6 +41,26 @@ const Editor = ({initData, onSubmit }) => {
         navigate(-1);
     }
 
+    // 이미지 클릭 이벤트 핸들러
+    const handleChangeEmotion = (emotionId) => {
+        setState({ // 이미지의 속성값 (emotionId) 변경
+            ...state,
+            emotionId
+        })
+    }
+    // init의 존재 여부 확인
+    useEffect(() => {
+        // T -> props 상위 컴포넌트에 전달됨,
+        // init가 존재하면 일기 수정, 현재 보여지는 내용이 init의 내용이어야 함
+        // F -> 존재 X 새 글 쓰기
+        if(initData) { 
+            setState({
+                ...initData,
+                date : getFormattedDate(new Date(parseInt(initData.date)))
+            })
+        }
+    },[initData]); // initData 는 처음 들어올 때 1번만 변경 -> useEffect 1번만 변경됨
+
     return (
         <div className="Editor">
             <div className="editor_section">
@@ -52,6 +73,11 @@ const Editor = ({initData, onSubmit }) => {
             <div className="editor_section">
                 <h4>오늘의 감정</h4>
                 {/* 감정 이미지 선택 창 */}
+                <div className="input_wrapper emotion_list_wrapper">
+                    {emotionList.map((item) => (
+                        <EmotionItem key={item.id} {...item} onClick={handleChangeEmotion} isSelected={item.id === state.emotionId}/>
+                    ))}
+                </div>
             </div>
             <div className="editor_section">
                 <h4>오늘의 일기</h4>
