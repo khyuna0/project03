@@ -1,5 +1,6 @@
 //import { useSearchParams } from "react-router-dom";
 import Button from "../component/Button";
+import Editor from "../component/Editor";
 import Header from "../component/Header";
 
 // Button 컴포넌트 props -> 버튼의 이름 text, 이벤트 핸들러 onClick
@@ -18,6 +19,7 @@ const Home = () => {
                 alert("부정 버튼")
             }}/>}
             /> 
+            <Editor />
         </div>
     )
 }
