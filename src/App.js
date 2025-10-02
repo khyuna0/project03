@@ -2,7 +2,7 @@ import './App.css';
 import Home from './pages/Home';
 import Edit from './pages/Edit';
 import New from './pages/New';
-import Diary from './pages/Dairy';
+import Diary from './pages/Diary';
 import { Routes, Route, Link } from 'react-router-dom';
 import React, { useEffect, useReducer, useRef, useState } from 'react';
 import { type } from '@testing-library/user-event/dist/type';
