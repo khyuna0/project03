@@ -1,0 +1,26 @@
+.menu_wrapper {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.left_col select {
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ececec;
+    padding: 10px 20px 10px 20px;
+    cursor: pointer;
+    font-family: "Nanum Pen Script";
+    font-size: 18px;
+}
+
+.right_col {
+    /* 자식 요소를 배치하고 남은 공간을 균등 배분해서 배치 */
+    flex-grow: 1;
+}
+
+.menu_wrapper .right_col button {   
+    width: 100%;
+}

@@ -64,3 +64,13 @@ export const emotionList = [
       img : getEmotionImgById(5)
     },
 ]
+
+export const getMonthRangeByDate = (date) => { // pivotDate 받아 월의 시작, 마지막 일 반환
+    const beginTimeStamp = new Date(date.getFullYear(), date.getMonth(), 1).getTime();
+    const endTimeStamp = new Date(
+        date.getFullYear(),
+        date.getMonth() +1, 
+        0, 23, 59, 59).getTime();
+
+    return {beginTimeStamp, endTimeStamp};
+}

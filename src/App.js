@@ -4,7 +4,7 @@ import Edit from './pages/Edit';
 import New from './pages/New';
 import Diary from './pages/Dairy';
 import { Routes, Route, Link } from 'react-router-dom';
-import { useEffect, useReducer, useRef, useState } from 'react';
+import React, { useEffect, useReducer, useRef, useState } from 'react';
 import { type } from '@testing-library/user-event/dist/type';
 import EmotionItem from './component/EmotionItem';
 // import { getEmotionImgById } from './util';
@@ -33,7 +33,13 @@ function reducer (state, action) {
   }
 }
 
+export const DiaryStateContext = React.createContext();
+export const DiaryDispatchContext = React.createContext();
+// context 2개 -> 전달해줄 함수만 분리함
+
 function App() {
+
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   const mockData = [
     {
@@ -61,6 +67,7 @@ function App() {
       type : "INIT",
       data : mockData
     })
+    setIsDataLoaded(true);
   },[]); // 의존성 배열 [] 로 하면 -> 최초 마운트할때 1번만 실행
 
   const idRef = useRef(0); // 일기의 아이디 생성 변수
@@ -102,24 +109,33 @@ function App() {
     })
   };
 
-
-  return (
-    <div className="App">
-      <div>
-        <Link to={"/"}>홈</Link> /
-        <Link to={"/new"}>일기쓰기</Link> /
-        <Link to={"/diary"}>일기 보기</Link> / 
-        <Link to={"/edit"}>일기 수정</Link>
-        {/* a 태그 링크 X 다른 페이지 연결 용도로 사용*/}
-      </div>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/new' element={<New />}/>
-        <Route path='/diary/:id' element={<Diary />}/>
-        <Route path='/edit' element={<Edit />}/>
-      </Routes>
-    </div>
+  if (isDataLoaded) { // T -> 전부 로딩 완료 
+    return (
+    <DiaryStateContext.Provider value={data}> {/* data 전달 용 */}
+      <DiaryDispatchContext.Provider 
+        value={{onCreate, onUpdate, onDelete}}> {/* 함수 전달 */}
+        <div className="App">
+          <div>
+            <Link to={"/"}>홈</Link> /
+            <Link to={"/new"}>일기쓰기</Link> /
+            <Link to={"/diary"}>일기 보기</Link> / 
+            <Link to={"/edit"}>일기 수정</Link>
+            {/* a 태그 링크 X 다른 페이지 연결 용도로 사용*/}
+          </div>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/new' element={<New />}/>
+            <Route path='/diary/:id' element={<Diary />}/>
+            <Route path='/edit' element={<Edit />}/>
+          </Routes>
+        </div>
+      </DiaryDispatchContext.Provider> 
+    </DiaryStateContext.Provider>
   );
+} else {
+  return <div>데이터를 불러오는 중입니다.</div>;
+}
+
 }
 
 export default App;
