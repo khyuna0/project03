@@ -6,7 +6,7 @@ const Diary = () => {
 
     return (
         <div>
-            <h2>Diary</h2>
+            Diary
             <h3>{id} 번 일기</h3>
         </div>
     )
