@@ -1,15 +1,41 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import useDiary from "../hooks/useDiary";
+import Header from "../component/Header";
+import Button from "../component/Button";
+import { getFormattedDate } from "../util";
+import Viewer from "../component/Viewer";
 
 const Diary = () => {
     const {id} = useParams();
     // @pathVariable String id 유사
+    const data = useDiary(id); // 유저가 클릭한 글의 id와 일치하는 일기 객체    
+    const navigate = useNavigate();
 
-    return (
-        <div>
-            Diary
-            <h3>{id} 번 일기</h3>
-        </div>
-    )
+    const goBack = () => {
+        navigate(-1); 
+    }
+    const goEdit = () => {
+        navigate(`/edit/{id}`); 
+    }
+
+    if (!data) { // data 값이 undefined 일 때 방어
+        return (
+            <div>
+                일기를 불러오는 중입니다...
+            </div>
+        )
+    } else {
+        const {date, content, emotionId} = data;
+        const title = `${getFormattedDate(new Date(Number(date)))} 기록`
+        return (
+            <div>
+                <Header title={title} 
+                leftChild={<Button text={"< 뒤로가기"} onClick={goBack}/>} 
+                rightChild={<Button text={"수정하기"} onClick={goEdit}/>}/>
+                <Viewer content={content} emotionId={emotionId}/>
+            </div>
+        )
+    }
 }
 
 export default Diary;
